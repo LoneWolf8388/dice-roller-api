@@ -1,18 +1,19 @@
 {
-  "name": "dice",
+  "name": "dice-roller-api",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Server Dice Roller API hosted on Azure",
+  "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "node server.js",
+    "build": "echo \"No build step needed\""
   },
-  "keywords": [],
+  "engines": {
+    "node": "18.x"
+  },
   "author": "",
   "license": "ISC",
-  "type": "commonjs",
   "dependencies": {
-    "cors": "^2.8.5",
-    "express": "^5.1.0"
+    "express": "^4.19.2",
+    "cors": "^2.8.5"
   }
 }
