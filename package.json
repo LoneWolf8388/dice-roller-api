@@ -1,7 +1,7 @@
 {
   "name": "dice-roller-api",
   "version": "1.0.0",
-  "description": "Server Dice Roller API hosted on Azure App Service",
+  "description": "Server Dice Roller WebService API hosted on Azure App Service",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
@@ -9,8 +9,9 @@
   "engines": {
     "node": ">=18.x"
   },
+  "license": "ISC",
   "dependencies": {
     "cors": "^2.8.5",
-    "express": "^4.21.0"
+    "express": "^4.19.2"
   }
 }
