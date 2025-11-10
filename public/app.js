@@ -1,39 +1,37 @@
-const out = document.getElementById("out");
-const api = (p) => fetch(p).then((r) => r.json());
+const $ = (sel) => document.querySelector(sel);
+const out = $("#out");
 
-document.getElementById("pingBtn").addEventListener("click", async () => {
+function show(obj) {
+  out.textContent = JSON.stringify(obj, null, 2);
+}
+
+$("#pingBtn").addEventListener("click", async () => {
   try {
-    out.textContent = JSON.stringify(await api("/api/ping"), null, 2);
+    const r = await fetch("/api/ping");
+    show(await r.json());
   } catch (e) {
-    out.textContent = String(e);
+    show({ error: String(e) });
   }
 });
 
-document.getElementById("rollBtn").addEventListener("click", async () => {
-  const f = document.getElementById("faces").value || 6;
-  const c = document.getElementById("count").value || 5;
+$("#rollBtn").addEventListener("click", async () => {
+  const faces = $("#faces").value || 6;
+  const count = $("#count").value || 5;
   try {
-    out.textContent = JSON.stringify(
-      await api(`/api/roll?faces=${f}&count=${c}`),
-      null,
-      2
-    );
+    const r = await fetch(`/api/roll?faces=${faces}&count=${count}`);
+    show(await r.json());
   } catch (e) {
-    out.textContent = String(e);
+    show({ error: String(e) });
   }
 });
 
-document.getElementById("noCorsBtn").addEventListener("click", async () => {
-  const f = document.getElementById("faces").value || 6;
-  const c = document.getElementById("count").value || 5;
+$("#rollNoCorsBtn").addEventListener("click", async () => {
+  const faces = $("#faces").value || 6;
+  const count = $("#count").value || 5;
   try {
-    // This will work here (same origin). It will fail from your static site (CORS demo).
-    out.textContent = JSON.stringify(
-      await api(`/api/roll-no-cors?faces=${f}&count=${c}`),
-      null,
-      2
-    );
+    const r = await fetch(`/api/roll-no-cors?faces=${faces}&count=${count}`);
+    show(await r.json());
   } catch (e) {
-    out.textContent = String(e);
+    show({ error: String(e) });
   }
 });

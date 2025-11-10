@@ -7,15 +7,22 @@
     <style>
       body {
         font-family: system-ui, Arial, sans-serif;
-        max-width: 720px;
+        max-width: 760px;
         margin: 2rem auto;
         line-height: 1.5;
-        color: #111;
       }
       button {
         padding: 0.55rem 1rem;
         margin: 0.25rem 0.5rem 0.25rem 0;
         cursor: pointer;
+      }
+      label {
+        display: inline-block;
+        width: 60px;
+      }
+      input {
+        width: 80px;
+        padding: 0.3rem;
       }
       pre {
         background: #111;
@@ -23,53 +30,29 @@
         padding: 1rem;
         border-radius: 8px;
         overflow: auto;
-        font-size: 0.9rem;
-      }
-      label {
-        display: inline-block;
-        width: 6rem;
-      }
-      input {
-        width: 60px;
-        padding: 0.3rem;
-        margin-left: 0.3rem;
-      }
-      .row {
-        margin: 0.5rem 0;
       }
     </style>
   </head>
   <body>
     <h1>Dice Roller WebService — API Test Page</h1>
     <p>
-      This page only <em>tests</em> the REST endpoints. The actual Dice Roller
-      UI is on the static site.
+      This page only tests the REST endpoints. The actual Dice Roller UI is on
+      the static site.
     </p>
 
-    <div class="row">
-      <button id="pingBtn">Ping API</button>
-    </div>
+    <p><button id="pingBtn">Ping API</button></p>
 
     <h3>Roll Dice</h3>
-    <div class="row">
-      <label for="faces">Faces:</label>
-      <input id="faces" type="number" value="6" min="2" />
-    </div>
-    <div class="row">
-      <label for="count">Count:</label>
-      <input id="count" type="number" value="5" min="1" />
-    </div>
-    <div class="row">
+    <p><label>Faces:</label><input id="faces" type="number" value="6" /></p>
+    <p><label>Count:</label><input id="count" type="number" value="5" /></p>
+    <p>
       <button id="rollBtn">/api/roll</button>
-      <button id="noCorsBtn">
-        /api/roll-no-cors (should fail from static site)
-      </button>
-    </div>
+      <button id="rollNoCorsBtn">/api/roll-no-cors (for CORS demo)</button>
+    </p>
 
     <h3>Response</h3>
     <pre id="out">Click a button…</pre>
 
-    <!-- External JS file (deferred so it loads after DOM) -->
-    <script src="/app.js" defer></script>
+    <script src="app.js"></script>
   </body>
 </html>

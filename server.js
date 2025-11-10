@@ -4,22 +4,20 @@ const cors = require("cors");
 const app = express();
 const PORT = process.env.PORT || 8080;
 
-// Allow your static site later; "*" while testing
+// allow static site to call this API (set ALLOWED_ORIGIN in Azure later)
 const allowedOrigin = process.env.ALLOWED_ORIGIN || "*";
 app.use(cors({ origin: allowedOrigin }));
 
-// Serve / with the tester page
+// serve a tiny test page ONLY to exercise APIs (this is NOT the real UI)
 app.use(express.static("public"));
 
-// Health
-app.get("/api/ping", (_req, res) => {
+app.get("/api/ping", (_, res) => {
   res.json({ ok: true, ts: new Date().toISOString() });
 });
 
-// Dice API
 app.get("/api/roll", (req, res) => {
-  const faces = Number(req.query.faces ?? 6);
-  const count = Number(req.query.count ?? 5);
+  const faces = Math.max(2, parseInt(req.query.faces || "6", 10));
+  const count = Math.max(1, parseInt(req.query.count || "5", 10));
   const rolls = Array.from(
     { length: count },
     () => 1 + Math.floor(Math.random() * faces)
@@ -27,16 +25,15 @@ app.get("/api/roll", (req, res) => {
   res.json({ faces, count, rolls });
 });
 
-// No-CORS endpoint to demonstrate failure from static site
+// SAME logic but we will call it from the static site to DEMO CORS failure later
 app.get("/api/roll-no-cors", (req, res) => {
-  const faces = Number(req.query.faces ?? 6);
-  const count = Number(req.query.count ?? 5);
+  const faces = Math.max(2, parseInt(req.query.faces || "6", 10));
+  const count = Math.max(1, parseInt(req.query.count || "5", 10));
   const rolls = Array.from(
     { length: count },
     () => 1 + Math.floor(Math.random() * faces)
   );
-  // intentionally no cors() here
-  res.json({ faces, count, rolls });
+  res.json({ faces, count, rolls, note: "intended for CORS demo" });
 });
 
 app.listen(PORT, () => console.log(`Dice API listening on ${PORT}`));
