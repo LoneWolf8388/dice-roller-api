@@ -2,18 +2,20 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>Dice API Tester</title>
+    <title>Dice Roller WebService — API Test Page</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <style>
       body {
-        font-family: system-ui, Arial;
+        font-family: system-ui, Arial, sans-serif;
         max-width: 720px;
         margin: 2rem auto;
         line-height: 1.5;
+        color: #111;
       }
       button {
         padding: 0.55rem 1rem;
         margin: 0.25rem 0.5rem 0.25rem 0;
+        cursor: pointer;
       }
       pre {
         background: #111;
@@ -21,10 +23,16 @@
         padding: 1rem;
         border-radius: 8px;
         overflow: auto;
+        font-size: 0.9rem;
       }
       label {
         display: inline-block;
         width: 6rem;
+      }
+      input {
+        width: 60px;
+        padding: 0.3rem;
+        margin-left: 0.3rem;
       }
       .row {
         margin: 0.5rem 0;
@@ -38,14 +46,18 @@
       UI is on the static site.
     </p>
 
-    <div class="row"><button id="pingBtn">Ping API</button></div>
+    <div class="row">
+      <button id="pingBtn">Ping API</button>
+    </div>
 
     <h3>Roll Dice</h3>
     <div class="row">
-      <label>Faces:</label><input id="faces" type="number" value="6" min="2" />
+      <label for="faces">Faces:</label>
+      <input id="faces" type="number" value="6" min="2" />
     </div>
     <div class="row">
-      <label>Count:</label><input id="count" type="number" value="5" min="1" />
+      <label for="count">Count:</label>
+      <input id="count" type="number" value="5" min="1" />
     </div>
     <div class="row">
       <button id="rollBtn">/api/roll</button>
@@ -57,45 +69,7 @@
     <h3>Response</h3>
     <pre id="out">Click a button…</pre>
 
-    <script>
-      const out = document.getElementById("out");
-      const api = (p) => fetch(p).then((r) => r.json());
-
-      document.getElementById("pingBtn").onclick = async () => {
-        try {
-          out.textContent = JSON.stringify(await api("/api/ping"), null, 2);
-        } catch (e) {
-          out.textContent = String(e);
-        }
-      };
-
-      document.getElementById("rollBtn").onclick = async () => {
-        const f = document.getElementById("faces").value || 6;
-        const c = document.getElementById("count").value || 5;
-        try {
-          out.textContent = JSON.stringify(
-            await api(`/api/roll?faces=${f}&count=${c}`),
-            null,
-            2
-          );
-        } catch (e) {
-          out.textContent = String(e);
-        }
-      };
-
-      document.getElementById("noCorsBtn").onclick = async () => {
-        const f = document.getElementById("faces").value || 6;
-        const c = document.getElementById("count").value || 5;
-        try {
-          out.textContent = JSON.stringify(
-            await api(`/api/roll-no-cors?faces=${f}&count=${c}`),
-            null,
-            2
-          );
-        } catch (e) {
-          out.textContent = String(e);
-        }
-      };
-    </script>
+    <!-- External JS file (deferred so it loads after DOM) -->
+    <script src="/app.js" defer></script>
   </body>
 </html>
